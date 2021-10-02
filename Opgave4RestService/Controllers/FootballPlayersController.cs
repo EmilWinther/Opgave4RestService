@@ -9,82 +9,48 @@ using Opgave4RestService.Managers;
 
 namespace Opgave4RestService.Controllers
 {
-    public class FootballPlayersController : Controller
+    [Route("[controller]")]
+    [ApiController]
+    public class FootballPlayersController : ControllerBase
     {
         private readonly FootballPlayerManager _footballPlayerManager = new FootballPlayerManager();
-        // GET: FootballPlayersController
-        public IEnumerable<FootballPlayer> Get()
+
+        [HttpGet]
+        public IEnumerable<FootballPlayer> GetAllPlayers()
         {
-            return _footballPlayerManager.GetAll();
+            return _footballPlayerManager.GetAllFPlayers();
+        }
+        [HttpGet]
+        [Route("Name/{substring}")]
+        public IEnumerable<FootballPlayer> Get(string substring)
+        {
+            return _footballPlayerManager.GetAll(substring);
         }
 
-        // GET: FootballPlayersController/Details/5
-        public ActionResult Details(int id)
+        [HttpGet]
+        [Route("Id={id}")]
+        public FootballPlayer Get(int id)
         {
-            return View();
+            return _footballPlayerManager.GetById(id);
         }
 
-        // GET: FootballPlayersController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: FootballPlayersController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public FootballPlayer Post([FromBody] FootballPlayer value)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return _footballPlayerManager.Add(value);
         }
 
-        // GET: FootballPlayersController/Edit/5
-        public ActionResult Edit(int id)
+        [HttpPut]
+        [Route("{id}")]
+        public FootballPlayer Put(int id, [FromBody] FootballPlayer value)
         {
-            return View();
+            return _footballPlayerManager.Update(id, value);
         }
-
-        // POST: FootballPlayersController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        [HttpDelete]
+        [Route("{id}")]
+        public FootballPlayer Delete(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: FootballPlayersController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: FootballPlayersController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return _footballPlayerManager.Delete(id);
         }
     }
 }

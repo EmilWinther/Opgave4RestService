@@ -12,16 +12,27 @@ namespace Opgave4RestService.Managers
 
         private static readonly List<FootballPlayer> Data = new List<FootballPlayer>
         {
-            new FootballPlayer(1, "e", 2323, 2323)
+            new FootballPlayer(_nextId++, "emil", 12000000.2 , 12),
+            new FootballPlayer(_nextId++, "cecilie", 12000000.22 , 13)
         };
 
-        public List<FootballPlayer> GetAll()
+        public List<FootballPlayer> GetAllFPlayers()
         {
             return new List<FootballPlayer>(Data);
             // copy constructor
             // Callers should no get a reference to the Data object, but rather get a copy
         }
 
+        public List<FootballPlayer> GetAll(string substring)
+        {
+            List<FootballPlayer> result = new List<FootballPlayer>(Data);
+            if (substring != null)
+            {
+                result = result.FindAll(data => data.Name.Contains(substring, StringComparison.OrdinalIgnoreCase));
+            }
+
+            return result;
+        }
         public FootballPlayer GetById(int id)
         {
             return Data.Find(footballPlayer => footballPlayer.Id == id);
@@ -48,6 +59,7 @@ namespace Opgave4RestService.Managers
             if (FP1 == null) return null;
             FP1.Name = updates.Name;
             FP1.Price = updates.Price;
+            FP1.ShirtNumber = updates.ShirtNumber;
             return FP1;
         }
     }
