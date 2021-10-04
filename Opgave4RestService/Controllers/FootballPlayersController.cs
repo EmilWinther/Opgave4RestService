@@ -28,7 +28,7 @@ namespace Opgave4RestService.Controllers
         }
 
         [HttpGet]
-        [Route("Id={id}")]
+        [Route("Id/{id}")]
         public FootballPlayer Get(int id)
         {
             return _footballPlayerManager.GetById(id);
@@ -41,13 +41,13 @@ namespace Opgave4RestService.Controllers
         }
 
         [HttpPut]
-        [Route("{id}")]
+        [Route("Id/{id}")]
         public FootballPlayer Put(int id, [FromBody] FootballPlayer value)
         {
             return _footballPlayerManager.Update(id, value);
         }
         [HttpDelete]
-        [Route("{id}")]
+        [Route("Id/{id}")]
         public FootballPlayer Delete(int id)
         {
             return _footballPlayerManager.Delete(id);
