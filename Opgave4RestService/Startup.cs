@@ -9,6 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Opgave4RestService.Model;
+using Opgave4RestService.Secrets;
 
 namespace Opgave4RestService
 {
@@ -24,8 +27,8 @@ namespace Opgave4RestService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
+            services.AddDbContext<FPContext>(opt => opt.UseSqlServer(MySecrets.ConnectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
