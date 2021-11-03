@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using FootBallLib;
 using Opgave4RestService.Managers;
@@ -20,6 +21,8 @@ namespace Opgave4RestService.Controllers
         {
             return _footballPlayerManager.GetAllFPlayers();
         }
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpGet]
         [Route("Name/{substring}")]
         public IEnumerable<FootballPlayer> Get(string substring)
